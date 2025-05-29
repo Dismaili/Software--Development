@@ -40,7 +40,7 @@ function info() {
 
   return {
     apiversion: "1",
-    author: "ichindris, dismaili1, rrama5, jkotori123, mmatevski, aganiu",
+    author: "ichindris, dismaili1, rrama5, mmatevski, aganiu",
     color: "#FF5733",
     head: "beluga",
     tail: "bolt",
