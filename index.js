@@ -68,15 +68,10 @@ function move(gameState) {
   const myNeck = gameState.you.body[1];
 
   // Prevent moving backwards
-  if (myNeck.x < myHead.x) {
-    isMoveSafe.left = false;
-  } else if (myNeck.x > myHead.x) {
-    isMoveSafe.right = false;
-  } else if (myNeck.y < myHead.y) {
-    isMoveSafe.down = false;
-  } else if (myNeck.y > myHead.y) {
-    isMoveSafe.up = false;
-  }
+  if (myNeck.x < myHead.x) isMoveSafe.left = false;
+  else if (myNeck.x > myHead.x) isMoveSafe.right = false;
+  else if (myNeck.y < myHead.y) isMoveSafe.down = false;
+  else if (myNeck.y > myHead.y) isMoveSafe.up = false;
 
   // Avoid collisions and unsafe moves
   isMoveSafe = preventOutOfBounds(myHead, gameState, isMoveSafe);
@@ -105,8 +100,8 @@ function move(gameState) {
 
 // Start server
 runServer({
-  info: info,
-  start: start,
-  move: move,
-  end: end,
+  info,
+  start,
+  move,
+  end,
 });
