@@ -25,7 +25,6 @@ app.use(express.json());
 app.post('/api/snake/settings', (req, res) => {
   const { name, color } = req.body;
   console.log('Updated Snake Settings:', name, color);
-  // Optionally store these in memory or file for game usage
   res.sendStatus(200);
 });
 
@@ -33,14 +32,13 @@ app.listen(port, () => {
   console.log(`Battlesnake + UI server running at http://localhost:${port}`);
 });
 
-
 // info is called when your Battlesnake is created
 function info() {
   console.log("INFO");
 
   return {
     apiversion: "1",
-    author: "ichindris, dismaili1, rrama5, mmatevski, aganiu",
+    author: "ichindris, dismaili1, rrama5, jkotori123, mmatevski, aganiu",
     color: "#FF5733",
     head: "beluga",
     tail: "bolt",
@@ -84,9 +82,8 @@ function move(gameState) {
   isMoveSafe = preventOutOfBounds(myHead, gameState, isMoveSafe);
   isMoveSafe = checkSelfCollision(gameState, myHead, isMoveSafe);
   isMoveSafe = checkSnakeCollision(gameState, myHead, isMoveSafe);
-  isMoveSafe = avoidHeadToHeadMoves(gameState, isMoveSafe); // ✅ Head-to-head logic
+  isMoveSafe = avoidHeadToHeadMoves(gameState, isMoveSafe);
 
-  // Filter to only safe moves
   const safeMoves = Object.keys(isMoveSafe).filter((key) => isMoveSafe[key]);
 
   if (safeMoves.length === 0) {
@@ -94,14 +91,13 @@ function move(gameState) {
     return { move: "down" };
   }
 
-  // Try moving toward food
   let nextMove = getMoveTowardsFood(gameState, safeMoves);
 
-  if (nextMove) {
-    console.log(`MOVE ${gameState.turn}: Going for food -> ${nextMove}`);
-  } else {
+  if (!nextMove) {
     nextMove = safeMoves[Math.floor(Math.random() * safeMoves.length)];
     console.log(`MOVE ${gameState.turn}: Random safe move -> ${nextMove}`);
+  } else {
+    console.log(`MOVE ${gameState.turn}: Going for food -> ${nextMove}`);
   }
 
   return { move: nextMove };
